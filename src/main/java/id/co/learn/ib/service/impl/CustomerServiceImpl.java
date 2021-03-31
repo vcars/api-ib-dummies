@@ -54,7 +54,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (!isAuthenticated) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, IBConstants.ERR_UNAUTHORIZED_ACCESS);
         }
+        log.info("sebelum ke repo");
         this.customerRepository.getUserByUsername(request.getUsername()).ifPresentOrElse(data->{
+            log.info("masuk ke repo");
             data.setLastLogin(new Date());
             this.customerRepository.save(data);
             sessionDto.setUsername(data.getUsername());

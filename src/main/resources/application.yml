@@ -20,7 +20,7 @@ spring:
     username: grkekqfyjbjmua
     password: e9ebb621d126129f1d37ec2342ad92a0f9d7c4978e07678c396403b2909cdc0c
     driver-class-name: org.postgresql.Driver
-    platform: oracle
+    platform: postgres
     filters: stat
     maxActive: 20
     initialSize: 1

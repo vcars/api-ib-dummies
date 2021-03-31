@@ -7,6 +7,7 @@ import id.co.learn.ib.dto.DebitCardDto;
 import id.co.learn.ib.dto.SessionDto;
 import id.co.learn.ib.request.LoginRequest;
 import id.co.learn.ib.util.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/api/customer")
+@Slf4j
 public class CustomerController {
 
     @Autowired
