@@ -5,9 +5,9 @@ server:
     whitelabel:
       enabled: false
 redis:
-  host: ec2-52-5-31-21.compute-1.amazonaws.com
-  port: 24020
-  password: "p9da5d5279e8e907c024ad55452f0112183a210aa110d34a4800723e02155d898"
+  host: redis-17415.c257.us-east-1-3.ec2.cloud.redislabs.com
+  port: 17415
+  password: vcars73
 spring:
   application:
     name: ib-api-dummies
