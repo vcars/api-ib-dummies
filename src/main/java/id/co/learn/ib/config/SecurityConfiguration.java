@@ -83,6 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers("/v**").authenticated();
+		http.cors();
 		http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
@@ -95,7 +96,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 						"Access-Control-Allow-Origin, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
 				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 				response.addHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
-				response.setStatus(HttpStatus.OK.value());
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
 					.findAny()
