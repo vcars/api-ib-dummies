@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -93,6 +95,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 						"Access-Control-Allow-Origin, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
 				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 				response.addHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
+				if (request.getMethod().equals(HttpMethod.OPTIONS.toString())){
+					response.setStatus(HttpStatus.OK.value());
+				}
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
 					.findAny()
