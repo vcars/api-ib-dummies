@@ -83,17 +83,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().disable()
-				.authorizeRequests()
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.anyRequest()
-				.fullyAuthenticated()
-				.and()
-				.httpBasic()
-				.and()
-				.csrf().disable();
-		//		http.csrf().disable().authorizeRequests().antMatchers("/v**").authenticated();
-//		http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.csrf().disable().authorizeRequests().antMatchers("/v**").authenticated();
+		http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	private Filter serviceFilter() {
@@ -106,6 +97,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
 				response.addHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
 				response.addHeader("Access-Control-Allow-Credentials","true");
+				if(CorsUtils.isPreFlightRequest(request)) {
+					response.setStatus(HttpServletResponse.SC_OK);
+				}
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
 					.findAny()
