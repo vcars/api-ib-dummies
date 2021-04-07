@@ -92,6 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				response.addHeader("Access-Control-Allow-Headers",
 						"Access-Control-Allow-Origin, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
 				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+				response.addHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
 					.findAny()
