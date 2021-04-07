@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -81,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().and().cors().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers("/v**").authenticated();
+		http.csrf().disable().authorizeRequests().antMatchers("/v**").authenticated();
 		http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
@@ -90,10 +89,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return new OncePerRequestFilter(){
 			@Override
 			protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-				response.addHeader("Access-Control-Allow-Methods","POST,GET,OPTIONS,DELETE,PUT");
 				response.addHeader("Access-Control-Allow-Headers",
-						"Access-Control-Allow-Origin,Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+						"Access-Control-Allow-Origin, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
+				response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+				response.addHeader("Access-Control-Allow-Methods","POST, GET, OPTIONS, DELETE, PUT");
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
 					.findAny()
