@@ -99,6 +99,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				response.addHeader("Access-Control-Allow-Credentials","true");
 				if(CorsUtils.isPreFlightRequest(request)) {
 					response.setStatus(HttpServletResponse.SC_OK);
+					return;
 				}
 				AtomicBoolean isPermitted = new AtomicBoolean(false);
 				Arrays.stream(ignoredApis).filter(url -> request.getRequestURI().contains(url))
