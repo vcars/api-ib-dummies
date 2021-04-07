@@ -84,7 +84,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll();//.antMatchers("/v**").authenticated();
-		http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
+		//http.addFilterBefore(serviceFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	private Filter serviceFilter() {
